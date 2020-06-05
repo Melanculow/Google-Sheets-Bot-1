@@ -1,21 +1,26 @@
+import os
+import json
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from pprint import pprint
 
 scope = ["https://spreadsheets.google.com/feeds","https://www.googleapis.com/auth/spreadsheets","https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive"]
+json_credentials = os.getenv("GOOGLE_SHEETS_CREDENTIALS_JSON")
 
-credits = ServiceAccountCredentials.from_json_keyfile_name("credits.json", scope)
+credentials_dict = json.loads(json_credentials)
+credentials_dict["private_key"] = credentials_dict["private_key"].replace("\\\\n","\n")
+credentials = ServiceAccountCredentials.from_json_keyfile_dict(credentials_dict, scope)
+client = gspread.authorize(credentials)
 
-client = gspread.authorize(credits)
+spreadsheet = client.open_by_url("https://docs.google.com/spreadsheets/d/1iZpD4XQZk206__-hs6PfC2QEW7TJKTZenpKoj8mMERo/edit#gid=0")
+sheet = spreadsheet.sheet1
 
-sheet = client.open("Sheet1").sheet1
-
-data = sheet.get_all_records()
-
-insertRow = ["Knut",3,7]
-sheet.insert_row(len(data))
+for i in range(11):
+    for j in range(11):
+        sheet.update_cell(i,j,str(i*j))
 
 """
+data = sheet.get_all_records()
 row = sheet.row_values(2)
 col = sheet.col_values(2)
 cell = sheet.cell(1,2).value
