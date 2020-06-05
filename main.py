@@ -12,6 +12,9 @@ sheet = client.open("Sheet1").sheet1
 
 data = sheet.get_all_records()
 
+insertRow = ["Knut",3,7]
+sheet.insert_row(len(data))
+
 """
 row = sheet.row_values(2)
 col = sheet.col_values(2)
