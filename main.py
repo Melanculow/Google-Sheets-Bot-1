@@ -16,9 +16,7 @@ client = gspread.authorize(credentials)
 spreadsheet = client.open_by_url("https://docs.google.com/spreadsheets/d/1iZpD4XQZk206__-hs6PfC2QEW7TJKTZenpKoj8mMERo/edit#gid=0")
 sheet = spreadsheet.sheet1
 
-for i in range(11):
-    for j in range(11):
-        sheet.update_cell(i,j,str(i*j))
+sheet.insert_row(["Upload from Heroku succeeded"], 1)
 
 """
 data = sheet.get_all_records()
