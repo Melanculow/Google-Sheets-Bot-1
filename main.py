@@ -6,6 +6,7 @@ from pprint import pprint
 
 scope = ["https://spreadsheets.google.com/feeds","https://www.googleapis.com/auth/spreadsheets","https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive"]
 json_credentials = os.getenv("GOOGLE_SHEETS_CREDENTIALS_JSON")
+print(json_credentials)
 
 credentials_dict = json.loads(json_credentials)
 credentials_dict["private_key"] = credentials_dict["private_key"].replace("\\\\n","\n")
